@@ -8,3 +8,11 @@ Array.from(cells).forEach(element => {
 
     })
 });
+//Player factory
+const Player = (name,sign) =>
+{
+ 
+    return {name,sign}
+}
+let person1 = Player("jackson","x")
+console.log(person1)
