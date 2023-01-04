@@ -1,0 +1,146 @@
+body
+{
+    margin: 0;
+}
+:root
+{
+    --cell-size: 100px;
+    --mark-size: calc(var(--cell-size)*0.9);
+}
+.gameboard
+{
+    display: grid;
+    grid-template-columns: repeat(3,auto);
+    height: 100vh;
+    width: 100vw;
+    justify-content: center;
+    align-content: center;
+    justify-items: center;
+    align-items: center;
+}
+.cell
+{
+    border: solid black 1px;
+    height: var(--cell-size);
+    width: var(--cell-size);
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    align-items: center;position: relative;
+}
+.cell:first-child, 
+.cell:nth-child(2),
+.cell:nth-child(3)
+{
+    border-top: none;
+}
+
+.cell:nth-child(3n+1)
+{
+    border-left:none;
+}
+.cell:nth-child(3n)
+{
+    border-right: none;
+}
+
+.cell:last-child, 
+.cell:nth-child(8),
+.cell:nth-child(7)
+{
+    border-bottom: none;
+}
+/* x piece */
+.cell.x::before,
+.cell.x::after
+{
+    content: '';
+    height: var(--mark-size);
+    width: calc(var(--mark-size)*0.15);
+    background-color: black;
+    position: absolute;
+}
+.cell.x::before
+{
+    rotate: 45deg;
+}
+
+
+.cell.x::after
+{
+    rotate: -45deg;
+}
+
+/*  o piece */
+.cell.o::before,
+.cell.o::after
+{
+    content: '';
+    height: calc(var(--mark-size)*.9);
+    width: calc(var(--mark-size)*.9);
+    background-color: black;
+    position: absolute;
+    border-radius: 100%;
+}
+
+.cell.o::after
+{
+    height: calc(var(--mark-size)*0.60);
+    width:  calc(var(--mark-size)*0.60);
+    background-color: rgb(255, 255, 255);
+}
+.cell.x,
+.cell.o 
+{
+    cursor: not-allowed;
+}
+
+
+/* ghost piece */
+
+
+.gameboard.x .cell:not(.x):not(.o):hover::before
+
+
+{
+    content: '';
+    height: var(--mark-size);
+    width: calc(var(--mark-size)*0.15);
+    background-color: lightgray;
+    position: absolute;
+    rotate: 45deg;
+    
+}
+.gameboard.x .cell:not(.x):not(.o):hover::after
+{
+    content: '';
+    height: var(--mark-size);
+    width: calc(var(--mark-size)*0.15);
+    background-color: lightgray;
+    position: absolute;
+    rotate: -45deg;
+}
+
+/* translucent piece o */
+.gameboard.o .cell:not(.x):not(.o):hover::before
+
+
+{   content: '';
+    height: calc(var(--mark-size)*.9);
+    width: calc(var(--mark-size)*.9);
+    background-color:   lightgray;
+    position: absolute;
+    border-radius: 100%;
+}
+.gameboard.o .cell:not(.x):not(.o):hover::after
+{
+    content: '';
+    height: calc(var(--mark-size)*.9);
+    width: calc(var(--mark-size)*.9);
+    
+    position: absolute;
+    border-radius: 100%;
+    height: calc(var(--mark-size)*0.60);
+    width:  calc(var(--mark-size)*0.60);
+    background-color: rgb(255, 255, 255);
+}
