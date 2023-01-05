@@ -14,5 +14,23 @@ const Player = (name,sign) =>
  
     return {name,sign}
 }
-let person1 = Player("jackson","x")
-console.log(person1)
+
+oneplayerButton = document.getElementById("1player_button")
+twoplayerbutton= document.getElementById("2player_button")
+multiplayer_selection = document.getElementById("multiplayer_selection")
+singleplayer_selection = document.getElementById("singleplayer_selection")
+twoplayerbutton.addEventListener("click", ()=>
+{   
+    console.log("2 player mode selected")
+    multiplayer_selection.classList.remove("unselected")
+    singleplayer_selection.classList.add("unselected")
+
+}) 
+
+oneplayerButton.addEventListener("click", ()=>
+{   
+    console.log("1 player mode selected")
+    multiplayer_selection.classList.add("unselected")
+    singleplayer_selection.classList.remove("unselected")
+
+}) 
