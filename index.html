@@ -9,7 +9,34 @@
     <script src="script.js" defer></script>
 </head>
 <body>
-    <div class="gameboard " id="gameboard">
+    <div class="content">
+        <div class="gamemode_selection">
+            <button class="gamemode_selector" id="1player_button">1 PLAYER</button>
+            <button class="gamemode_selector" id="2player_button">2 PLAYERS</button>
+        </div>
+        <div class="options_menu">
+            <div class="multiplayer_selection" class="unselected" id="multiplayer_selection">
+                <div class="input_mp">
+                 <div class="input_field_mp">
+                     
+                     <label for="player1"></label>Player 1
+                     <input type="text" id="player1">
+                     </div>
+                     
+                     <div class="input_field_mp">
+                         
+                         <label for="player2"></label>Player 2
+                         <input type="text" id="player2">
+                         </div>
+                </div>
+                 <button>START</button>
+             </div>
+             <div class="singleplayer_selection" id="singleplayer_selection">
+                <h3>Choose the difficulty</h3>
+                <div class="singleplayer_buttons"><button>Easy</button><button>Medium</button><button>Hard</button></div>
+             </div>
+        </div>
+     <div class="gameboard " id="gameboard">
         <div class="cell "  data-cell></div>
         <div class="cell " data-cell></div>
         <div class="cell" data-cell></div>
@@ -19,6 +46,7 @@
         <div class="cell" data-cell></div>
         <div class="cell" data-cell></div>
         <div class="cell" data-cell></div>
+     </div>
     </div>
 </body>
 </html>
