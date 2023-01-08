@@ -1,6 +1,7 @@
 body
 {
     margin: 0;
+    background-color: aliceblue;
 }
 :root
 {
@@ -14,7 +15,8 @@ body
     align-items: center;
     justify-content: flex-start;
     margin-top: 5%;
-    
+
+
 }
 .gameboard
 {
@@ -37,7 +39,7 @@ body
     cursor: pointer;
     align-items: center;position: relative;
 }
-.cell:first-child, 
+.cell:first-child,
 .cell:nth-child(2),
 .cell:nth-child(3)
 {
@@ -53,7 +55,7 @@ body
     border-right: none;
 }
 
-.cell:last-child, 
+.cell:last-child,
 .cell:nth-child(8),
 .cell:nth-child(7)
 {
@@ -99,7 +101,7 @@ body
     background-color: rgb(255, 255, 255);
 }
 .cell.x,
-.cell.o 
+.cell.o
 {
     cursor: not-allowed;
 }
@@ -118,7 +120,7 @@ body
     background-color: lightgray;
     position: absolute;
     rotate: 45deg;
-    
+
 }
 .gameboard.x .cell:not(.x):not(.o):hover::after
 {
@@ -146,7 +148,7 @@ body
     content: '';
     height: calc(var(--mark-size)*.9);
     width: calc(var(--mark-size)*.9);
-    
+
     position: absolute;
     border-radius: 100%;
     height: calc(var(--mark-size)*0.60);
@@ -168,8 +170,9 @@ body
     padding-bottom: 10px;
     align-items: center;
     box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+    background-color: white
 }
- @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500&display=swap'); 
+ @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500&display=swap');
 .options_menu
 {
     box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
@@ -177,7 +180,12 @@ body
     height: 150px;
     width: 400px;
     position: relative;
-    
+    margin-bottom: 20px;
+    background-color: white;
+
+
+
+
 }
  .gamemode_selection button
 {
@@ -190,7 +198,7 @@ body
     font-weight: bold;
     font-size: large;
     color: purple;
-    
+
 
 }
 
@@ -210,9 +218,9 @@ body
     border-right: none;
     padding-bottom: 20px;
     position: absolute;
-    
-    
-    
+
+
+
 }
 .input_mp
 {
@@ -250,10 +258,11 @@ input
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
-    height: 80%;
+    height: 100%;
+    border-bottom: 2px solid;
     width: 100%;
     position: absolute;
-    
+
 
 
 }
@@ -268,11 +277,11 @@ input
     justify-content: space-evenly;
     width: 80%;
     font-family: 'Oswald', sans-serif;
-    
+
 
 }
 .singleplayer_buttons button
-{   
+{
     border: none;
     width: 25%;
     font-family: 'Oswald', sans-serif;
