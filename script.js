@@ -1,4 +1,4 @@
-cells = document.getElementsByClassName("cell")
+/* cells = document.getElementsByClassName("cell")
 Array.from(cells).forEach(element => {
     console.log(element)
     element.addEventListener('click',()=>
@@ -15,6 +15,7 @@ const Player = (name,sign) =>
     return {name,sign}
 }
 
+*/
 oneplayerButton = document.getElementById("1player_button")
 twoplayerbutton= document.getElementById("2player_button")
 multiplayer_selection = document.getElementById("multiplayer_selection")
@@ -35,6 +36,7 @@ oneplayerButton.addEventListener("click", ()=>
 
 })
 
+
 const WINNING_COMBINATIONS = [
     [0,1,2],
     [3,4,5],
@@ -47,36 +49,39 @@ const WINNING_COMBINATIONS = [
 ]
 
 //check for win
-function checkWin(currentClass)
-{
-    return WINNING_COMBINATIONS.some(combination =>
-        {
-            return combination.every( index =>
-                {
-                    return cells[index].classList.contains(currentClass)
-                })
-        })
-};
+// function checkWin(currentClass)
+// {
+//     return WINNING_COMBINATIONS.some(combination =>
+//         {
+//             return combination.every( index =>
+//                 {
+//                     return cells[index].classList.contains(currentClass)
+//                 })
+//         })
+// };
 
 // Tic Tac Toe module
 const TicTacToe = (()=>
 {   //Common Functions for Sp and Mp
-    gameboard = document.getElementById("gameboard")
+    const gameboard = document.getElementById("gameboard")
     const counter = 0;
     const startNewGame = () =>
     {
+        
         //board removes previous classes,clears the cells of any classes and sets X as first player
+        //remove modals
         
         gameboard.classList.remove("o")
         gameboard.classList.remove("x")
+        console.log("board classes cleared")
         
 
         //clear cells
         cells = document.getElementsByClassName("cell")
         Array.from(cells).forEach(element => {
-        console.log(element)
-        element.classList.remove("x")
-        element.classList.remove("o")
+            
+            element.classList.remove("x")
+            element.classList.remove("o")
 
         });
         let currentClass = "x"
@@ -84,26 +89,44 @@ const TicTacToe = (()=>
     }
 
 
-    const playGame = (currentClass) =>
+    const playGame = (currentClass = startNewGame()) =>
     {
-        //Add a piece
-        gameboard.classList.add(currentClass)
-        addPiece(currentClass)
+        console.log("Game Started")
+        //Loop the game until it's either won or drawn
+        
+        while (checkWin(currentClass) == false ) 
+        {    
+            //add correct hover effect to board
+            if (currentClass == "x") {
+                gameboard.classList.remove("o")
+                gameboard.classList.add(currentClass)
+            } else {
+                if (currentClass="o") {
+                    gameboard.classList.remove("x")
+                    gameboard.classList.add(currentClass)
+                }
+            }
+            
+            //add piece
+            addPiece(currentClass)
 
-        //Check for win 
-        if(checkWin(currentClass))
-        {
-            console.log("winner")
-        }
-            //if true , bring up winning modal
+            //Check for win 
+            if(checkWin(currentClass))
+            {
+                //if true , bring up winning modal
+                console.log("winner")
+                counter= 0;
+            }
+            
 
-        //Check for Draw
-        checkDraw(counter)
-        //Switch player
-        if (currentClass == "x") {
-            return currentClass = "o"
-        } else {
-            return currentClass = "x"
+            //Check for Draw
+            checkDraw(counter)
+            //Switch player
+            if (currentClass == "x") {
+                return currentClass = "o"
+            } else {
+                return currentClass = "x"
+            }
         }
     }
     //Add Piece
@@ -111,13 +134,15 @@ const TicTacToe = (()=>
     {
         cells = document.getElementsByClassName("cell")
         Array.from(cells).forEach(element => {
-            console.log(element)
+            
             element.addEventListener('click',()=>
             {
-                console.log(element)
+                
                 element.classList.add(currentClass)
-                counter++
+                
+                //possible need to remove previous eventlistener
             })
+            
         })
     }
 
@@ -138,4 +163,13 @@ const TicTacToe = (()=>
             //bring up draw modal
         }
     }
-})();
+    return {playGame};
+}
+)();
+
+mp_start = document.getElementById("mp_start")
+mp_start.addEventListener('click', () =>
+{
+    console.log("check")
+    TicTacToe.playGame()
+})
