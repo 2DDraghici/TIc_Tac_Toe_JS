@@ -1,0 +1,11 @@
+The game
+    *can be played for 9 rounds
+    *The board needs to be checked horizontally , vertically and diagonally for a winning series
+        *put the children of the divs into a 3x3 matrix and check them
+    *if there is no winning series after 9 moves , the game draws and resets
+    *after a win or draw  , all the children of the divs need to be removed
+
+The players
+    *alternates between X and O
+        *after placing a piece , every div listens for the other piece
+        *if a piece has a child the piece cannot be interacted with
