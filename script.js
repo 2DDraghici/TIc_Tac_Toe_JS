@@ -222,7 +222,7 @@ const Singleplayer = (()=>
     checkDraw(counter);
 
     //Computer does its move ; check if computer wins/draws ; switch back to player
-    computer_easy(O_CLASS);
+    computer_hard(O_CLASS);
 
   };
 
@@ -254,6 +254,9 @@ const Singleplayer = (()=>
       swap()
 
     }
+    board = Array.from(cells)
+
+
   //Add Piece
   const addPiece = (cell, currentClass) => {
     cell.classList.add(currentClass);
@@ -296,6 +299,164 @@ const Singleplayer = (()=>
       modal_message.textContent = `${winner} WON!`;
     }
   };
+
+  //minmax
+  function checkIfWinnerFound(currBdSt, currMark) {
+    if (
+        (currBdSt[0] === currMark && currBdSt[1] === currMark && currBdSt[2] === currMark) ||
+        (currBdSt[3] === currMark && currBdSt[4] === currMark && currBdSt[5] === currMark) ||
+        (currBdSt[6] === currMark && currBdSt[7] === currMark && currBdSt[8] === currMark) ||
+        (currBdSt[0] === currMark && currBdSt[3] === currMark && currBdSt[6] === currMark) ||
+        (currBdSt[1] === currMark && currBdSt[4] === currMark && currBdSt[7] === currMark) ||
+        (currBdSt[2] === currMark && currBdSt[5] === currMark && currBdSt[8] === currMark) ||
+        (currBdSt[0] === currMark && currBdSt[4] === currMark && currBdSt[8] === currMark) ||
+        (currBdSt[2] === currMark && currBdSt[4] === currMark && currBdSt[6] === currMark)
+    ) {
+        return true;
+    } else {
+        return false;
+    }
+}
+//transform the board into an Array
+function boardStatus (board)
+{
+    currentBoard = []
+    board.forEach((element) => {
+        if (element.classList.contains(X_CLASS)) currentBoard.push("x")
+        if (element.classList.contains(O_CLASS)) currentBoard.push("o")
+        if (!element.classList.contains(X_CLASS) && !element.classList.contains(O_CLASS)) currentBoard.push('')
+    });
+    console.log(`%ccurrent board is `,"background-color:grey; color: yellow;")
+    console.log(currentBoard)
+    return currentBoard
+}
+function freeSpaceOnBoard(currentBoard)
+{   fresSpaces = []
+    for (let index = 0; index < currentBoard.length; index++) {
+
+        if (currentBoard[index]=='')
+        {
+          fresSpaces.push(index)
+        }
+    }
+    console.log(`free board is ${fresSpaces}`)
+    return fresSpaces
+}
+// function minimax (currentBoard,depth,maximazingPlayer)
+// {
+//     freeSpaces = freeSpaceOnBoard(currentBoard)
+//     if(checkIfWinnerFound(currentBoard,X_CLASS)) {console.log("%cX WON",'background-color:green;'); return -1;}
+//     if(checkIfWinnerFound(currentBoard,O_CLASS)) {console.log("%cO WON",'background-color:purple;'); return 1;}
+//     if(freeSpaces.length == 0) { console.log("%cDRAW", 'background-color:white; color:black;'); return 0;}
+
+//     if(maximazingPlayer == O_CLASS){
+//         console.log("%c looking for a move for O",'background-color:blue;')
+//         bestScore = -1000
+//         currentBoard.forEach(element =>
+//           {   if(element == '')
+//                   {
+//                     element = O_CLASS
+//                     console.log(`the board during O's Turn is`)
+//                     console.log(currentBoard)
+//                     let score = minimax(currentBoard,depth+1,X_CLASS)
+//                     element = ''
+//                     if(score>bestScore) {bestScore = score; console.log(`best score is ${bestScore}`)}
+//                   }
+//           });
+//         return bestScore
+//     }else if(maximazingPlayer == X_CLASS)
+//     {
+//         console.log("%clooking for a move for X",`background-color:red`)
+//         bestScore = 1000
+//         currentBoard.forEach(element => {
+
+//           if(element == '')
+//           {
+//             element = O_CLASS
+//             console.log(`the board during X's Turn is`)
+//             console.log(currentBoard)
+//             let score = minimax(currentBoard,depth+1,O_CLASS)
+//             element = ''
+//             if(score>bestScore) {bestScore = score; console.log(`best score is ${bestScore}`)}
+//           }
+//         });
+//         return bestScore
+//     }
+// }
+
+
+
+function minimax(currBdSt,isMaximazing)
+{
+  freeSpaces = freeSpaceOnBoard(currBdSt)
+  if(checkIfWinnerFound(currBdSt,X_CLASS)) {console.log("%cX WON",'background-color:green;'); return -1;}
+  if(checkIfWinnerFound(currBdSt,O_CLASS)) {console.log("%cO WON",'background-color:purple;'); return 1;}
+  if(freeSpaces.length == 0) { console.log("%cDRAW", 'background-color:white; color:black;'); return 0;}
+
+  if(isMaximazing == O_CLASS)
+  {
+    let bestScore = -Infinity
+    for (let index = 0; index < currBdSt.length; index++) {
+      if (currBdSt[index] == '') {
+        currBdSt[index] = O_CLASS
+        let score = minimax(currBdSt,X_CLASS)
+        currBdSt[index] = ''
+        if (score>bestScore) bestScore = score
+      }
+
+    }
+    return bestScore
+  }else {
+    let bestScore = Infinity
+    for (let index = 0; index < currBdSt.length; index++) {
+      if (currBdSt[index] == '') {
+        currBdSt[index] = X_CLASS
+        let score = minimax(currBdSt,O_CLASS)
+        currBdSt[index] = ''
+        if (score<bestScore) bestScore = score
+      }
+
+    }
+    return bestScore
+
+  }
+
+}
+
+
+function computer_hard(currentClass)
+{
+    currentBoard = boardStatus(board)
+    bestScore = -Infinity
+    let bestMove;
+    for (let index = 0; index < currentBoard.length; index++) {
+      if (currentBoard[index] == '') {
+        currentBoard[index] = currentClass
+        let score = minimax(currentBoard,X_CLASS)
+        currentBoard[index] = ''
+        if(score>bestScore)
+        {
+          bestScore = score
+          bestMove = index
+        }
+      }
+
+    }
+    console.log(`added O on ${bestMove}`)
+    board[bestMove].classList.add(currentClass)
+    counter += 1
+    if (checkWin(O_CLASS)) {
+      console.log("winner: Computer");
+
+      displayModal("win", "Computer");
+      counter = 0;
+      return
+    }
+    checkDraw(counter)
+    swap()
+}
+
+
   return { playGame };
 })()
 
