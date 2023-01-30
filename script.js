@@ -3,6 +3,7 @@ twoplayerbutton = document.getElementById("2player_button");
 multiplayer_selection = document.getElementById("multiplayer_selection");
 singleplayer_selection = document.getElementById("singleplayer_selection");
 restartButton = document.getElementById("restart-button");
+let score = ''
 
 twoplayerbutton.addEventListener("click", () => {
   console.log("2 player mode selected");
@@ -194,9 +195,10 @@ const Singleplayer = (()=>
     return currentClass;
   };
 
-  const playGame = (currentClass = startNewGame()) => {
+  const playGame = (currentClass = startNewGame(),gamemode) => {
     console.log("Game Started");
     console.log(`current class is ${currentClass}`)
+    gameboard.classList.add("x")
     Array.from(cells).forEach((element) => {
       element.addEventListener("click", onClick, { once: true });
     });
@@ -222,7 +224,21 @@ const Singleplayer = (()=>
     checkDraw(counter);
 
     //Computer does its move ; check if computer wins/draws ; switch back to player
-    computer_hard(O_CLASS);
+    if (selectedGameMode == "easy") {
+      computer_easy(O_CLASS)
+    }
+    if(selectedGameMode == "medium")
+    {
+      if (counter < 3) {
+        computer_easy(O_CLASS)
+      } else
+      {
+        computer_hard(O_CLASS)
+      }
+    }
+    if (selectedGameMode == "hard") {
+      computer_hard(O_CLASS)
+    }
 
   };
 
@@ -458,6 +474,9 @@ function computer_hard(currentClass)
 
 
   return { playGame };
+
+
+
 })()
 
 
@@ -478,6 +497,19 @@ TicTacToe.playGame
 
 easy_button = document.getElementById("easy_button");
 easy_button.addEventListener("click", () => {
-  console.log("check");
-  Singleplayer.playGame();
+  console.log(" easy game selected");
+  selectedGameMode = "easy"
+  Singleplayer.playGame("easy");
+});
+medium_button = document.getElementById("medium_button");
+medium_button.addEventListener("click", () => {
+  console.log(" normal game selected");
+  selectedGameMode = "medium"
+  Singleplayer.playGame("medium");
+});
+hard_button = document.getElementById("hard_button");
+hard_button.addEventListener("click", () => {
+  console.log("hard game selected");
+  selectedGameMode = "hard"
+  Singleplayer.playGame("hard");
 });

@@ -203,6 +203,7 @@ body
     font-weight: bold;
     font-size: large;
     color: purple;
+    cursor: pointer;
 
 
 }
@@ -285,6 +286,7 @@ input
     font-family: 'Oswald', sans-serif;
 
 
+
 }
 .singleplayer_buttons button
 {
@@ -298,8 +300,17 @@ input
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
 }
+.singleplayer_buttons button:hover
+{
+    transform: scale(1.05) perspective(1px);
+}
+.singleplayer_buttons button:focus
+{
 
+    box-shadow:  rgb(255, 217, 29) 0px 0px 0px 2px, rgb(255, 4, 192) 0px 0px 0px 4px, rgb(255, 10, 153) 0px 0px 0px 6px;
+}
 
 
 /* Modals */
